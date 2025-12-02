@@ -1,12 +1,12 @@
 section .data
-    msg1 db 'Please enter a String: ', 0
+    msg1 db 'Please enter a String: ', 0 ; Define some Strings(0- nunll terminator)
     msg1_len equ $ - msg1
 
-    msg2 db 'The ascii number for each letter is:', 10, 0
+    msg2 db 'The ascii number for each letter is:', 10, 0 ; Define some Strings (10 - ASCII value) (0- nunll terminator)
     msg2_len equ $ - msg2
 
-    space db ' ', 0
-    newline db 10, 0
+    space db ' ', 0s OS the System Function ; Define some Strings (0- nunll terminator)
+    newline db 10, 0        ; Define some Strings (10 - ASCII value) (0- nunll terminator)
 
 section .bss
     input1 resb 255        ; buffer for user input
@@ -17,31 +17,31 @@ section .text
 
 _start:
     ; ---- Print prompt ----
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, msg1
-    mov rdx, msg1_len
+    mov rax, 1      ; System function (output)
+    mov rdi, 1      ; Tells OS the System Function 
+    mov rsi, msg1   ; Points to the msg1
+    mov rdx, msg1_len ; Length of msg1
     syscall
 
     ; ---- Read input ----
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, input1
-    mov rdx, 255
+    mov rax, 0      ; System Function (input)
+    mov rdi, 0      ; Tells OS the System Function
+    mov rsi, input1 ; Points to the input1
+    mov rdx, 255    ; Length of input
     syscall
 
     ; ---- Print newline ----
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, newline
-    mov rdx, 1
+    mov rax, 1      ; System function (output)
+    mov rdi, 1      ; Tells OS the System Function 
+    mov rsi, newline    ; Points to the newline
+    mov rdx, 1      ; Length of message
     syscall
 
     ; ---- Print header ----
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, msg2
-    mov rdx, msg2_len
+    mov rax, 1      ; System function (output)
+    mov rdi, 1      ; Tell
+    mov rsi, msg2   ; Points to the msg2
+    mov rdx, msg2_len    ; Length of msg2
     syscall
 
     xor rbx, rbx        ; index = 0
@@ -70,29 +70,29 @@ decimal_loop:
     jnz decimal_loop         ; continue loop
 
     ; ---- Print number ----
-    mov rax, 1
-    mov rdi, 1
+    mov rax, 1               ; System function (output)
+    mov rdi, 1               ; Tells OS the System Function 
     mov rsi, r10             ; pointer to start of digits
-    mov rdx, numStr + 3
+    mov rdx, numStr + 3      ; length of numStr + 3
     sub rdx, r10             ; length = end - start
     syscall
 
     ; ---- Print space ----
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, space
-    mov rdx, 1
+    mov rax, 1               ; System function (output)
+    mov rdi, 1               ; Tells OS the System Function
+    mov rsi, space           ; pointer to the space
+    mov rdx, 1               ; Length of space
     syscall
 
     inc rbx                  ; next character
     jmp convert_loop
 
 done:
-    ; ---- Print final newline ----
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, newline
-    mov rdx, 1
+    ; ---- Print newline ----
+    mov rax, 1      ; System function (output)
+    mov rdi, 1      ; Tells OS the System Function 
+    mov rsi, newline    ; Points to the newline
+    mov rdx, 1      ; Length of message
     syscall
 
     ; ---- Exit program ----

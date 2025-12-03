@@ -5,7 +5,7 @@ section .data
     msg2 db 'The ascii number for each letter is:', 10, 0 
     msg2_len equ $ - msg2
 
-    space db ' ', 0s OS the System Function 
+    space db ' ', 0
     newline db 10, 0       
 
 section .bss
